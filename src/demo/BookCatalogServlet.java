@@ -1,5 +1,8 @@
 package demo;
 
+import model.BookDAO;
+import model.BooksEntity;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,9 +24,11 @@ public class BookCatalogServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-
+            BookDAO db = new BookDAO();
+            List<BooksEntity> list = db.getAllBook();
+            request.setAttribute("books", list);
                 // forward the request to bookdetails.jsp, there must be a "/" before the web resource reference
-                getServletContext().getRequestDispatcher("/bookcatalog.jsp").forward(request,response);
+            getServletContext().getRequestDispatcher("/bookcatalog.jsp").forward(request,response);
 
         } catch (Exception e) {
             e.printStackTrace();
